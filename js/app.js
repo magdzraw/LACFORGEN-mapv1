@@ -1,6 +1,6 @@
-import { initMap, updateMap, normalizeCountryName, switchMapTheme } from './map.js';
-import { renderCharts, toggleDonutMode, updateChartsTheme } from './charts.js';
-import { initGlobe, updateGlobe, switchGlobeTheme, resizeGlobe, isGlobeInitialized } from './globe.js';
+import { initMap, updateMap, normalizeCountryName, switchMapTheme, invalidateMapSize } from './map.js?v=2.3';
+import { renderCharts, toggleDonutMode, updateChartsTheme } from './charts.js?v=2.3';
+import { initGlobe, updateGlobe, switchGlobeTheme, resizeGlobe, isGlobeInitialized } from './globe.js?v=2.3';
 
 const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1PURcEMg1RgnafRQEy1Bfn_mF8_CXWOsxhqNH_n-mPgc/gviz/tq?tqx=out:csv&gid=603583124';
 
@@ -57,6 +57,7 @@ function setupViewModeToggle() {
     if (btn3d) btn3d.classList.remove('active');
     if (mapEl) mapEl.style.display = 'block';
     if (globeEl) globeEl.style.display = 'none';
+    invalidateMapSize();
     updateMap(filters.pais, handleCountryClick);
   };
 

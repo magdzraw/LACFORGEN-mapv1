@@ -37,8 +37,8 @@ export function initGlobe(onCountrySelect) {
   onSelectCallback = onCountrySelect;
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
-  const globeTexture = isDark 
-    ? 'https://unpkg.com/three-globe/example/img/earth-night.jpg' 
+  const globeTexture = isDark
+    ? 'https://unpkg.com/three-globe/example/img/earth-night.jpg'
     : 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
 
   const width = container.clientWidth || 600;
@@ -111,7 +111,7 @@ function renderGlobePolygons() {
       const rawName = d.properties.name || d.properties.ADMIN;
       const cName = normalizeCountryName(rawName);
       const hasData = countryStats[cName] && countryStats[cName].count > 0;
-      
+
       if (selectedCountry === cName) return '#f59e0b';
       if (hoveredCountry === cName) return '#fbbf24';
       if (hasData) {
@@ -145,7 +145,7 @@ function renderGlobePolygons() {
         <div style="background: rgba(15, 23, 42, 0.92); color: #ffffff; padding: 7px 13px; border-radius: 8px; font-family: Outfit, sans-serif; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.2); pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.35);">
           <div style="font-weight: 700; font-size: 0.92rem; color: #38bdf8; margin-bottom: 2px;">${cName}</div>
           <div style="font-size: 0.8rem;">${count} ${count === 1 ? 'estudio registrado' : 'estudios registrados'}</div>
-          <div style="font-size: 0.72rem; color: #f59e0b; font-weight: 600; margin-top: 3px;">👉 Clic para filtrar este país</div>
+          <div style="font-size: 0.72rem; color: #f59e0b; font-weight: 600; margin-top: 3px;">Clic para filtrar este país</div>
         </div>
       `;
     })

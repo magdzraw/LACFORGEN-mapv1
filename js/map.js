@@ -81,10 +81,12 @@ export function initMap(onCountrySelect) {
   currentBaseLayer = tileLayers[activeBaseLayerKey];
 
   mapInstance = L.map('map-container', {
-    center: [-13.5, -67.0],
-    zoom: 3,
+    center: [-15.0, -68.0],
+    zoom: 2.8,
     minZoom: 2,
     maxZoom: 8,
+    zoomSnap: 0.1,
+    zoomDelta: 0.5,
     zoomControl: true,
     scrollWheelZoom: false,
     layers: [currentBaseLayer]
@@ -225,7 +227,7 @@ function updateInfoBox(countryName, stats) {
 
   html += `
       <div style="margin-top: 6px; font-size: 0.72rem; color: var(--primary); font-weight: 600;">
-        ${selectedCountry === countryName ? '✓ País seleccionado (clic para deseleccionar)' : '👉 Clic para filtrar este país'}
+        ${selectedCountry === countryName ? '✓ País seleccionado (clic para deseleccionar)' : 'Clic para filtrar este país'}
       </div>
     </div>
   `;
@@ -254,7 +256,7 @@ function renderGeojson(onCountrySelect) {
       };
     }
     countryStats[cName].count++;
-    
+
     const sp = item.especie || item.especie_comun || item.especie_cientifico;
     if (sp) countryStats[cName].species[sp] = (countryStats[cName].species[sp] || 0) + 1;
 
@@ -323,9 +325,9 @@ function renderGeojson(onCountrySelect) {
           const newCountry = isCurrentlySelected ? null : cName;
 
           if (newCountry) {
-            mapInstance.flyToBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 6, duration: 1.0 });
+            mapInstance.flyToBounds(layer.getBounds(), { padding: [40, 40], maxZoom: 6, duration: 1.0 });
           } else if (initialBounds) {
-            mapInstance.flyToBounds(initialBounds, { padding: [25, 25], duration: 1.0 });
+            mapInstance.flyToBounds(initialBounds, { padding: [10, 10], duration: 1.0 });
           }
 
           if (onCountrySelect) {
@@ -352,7 +354,7 @@ function renderGeojson(onCountrySelect) {
   }
 
   if (!hasAutoFitted && initialBounds) {
-    mapInstance.fitBounds(initialBounds, { padding: [25, 25], maxZoom: 5 });
+    mapInstance.fitBounds(initialBounds, { padding: [10, 10], maxZoom: 6 });
     hasAutoFitted = true;
   }
 }
@@ -361,7 +363,7 @@ export function updateMap(countryFilter, onCountrySelect) {
   const normFilter = countryFilter ? normalizeCountryName(countryFilter) : null;
   const filterChanged = selectedCountry !== normFilter;
   selectedCountry = normFilter;
-  
+
   renderGeojson(onCountrySelect);
 
   // If filter was changed from dropdown or clear button, trigger flyToBounds
@@ -375,10 +377,19 @@ export function updateMap(countryFilter, onCountrySelect) {
         }
       });
       if (targetLayer) {
-        mapInstance.flyToBounds(targetLayer.getBounds(), { padding: [50, 50], maxZoom: 6, duration: 1.0 });
+        mapInstance.flyToBounds(targetLayer.getBounds(), { padding: [40, 40], maxZoom: 6, duration: 1.0 });
       }
     } else if (initialBounds) {
-      mapInstance.flyToBounds(initialBounds, { padding: [25, 25], duration: 1.0 });
+      mapInstance.flyToBounds(initialBounds, { padding: [10, 10], duration: 1.0 });
+    }
+  }
+}
+
+export function invalidateMapSize() {
+  if (mapInstance) {
+    mapInstance.invalidateSize();
+    if (!selectedCountry && initialBounds) {
+      mapInstance.fitBounds(initialBounds, { padding: [10, 10], maxZoom: 6 });
     }
   }
 }

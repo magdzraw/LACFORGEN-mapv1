@@ -268,7 +268,7 @@ function renderGeojson(onCountrySelect) {
 
       return {
         fillColor: getCountryFillColor(cName, count),
-        weight: isSelected ? 3.5 : (count > 0 ? 1.5 : 1.0),
+        weight: isSelected ? 2.2 : (count > 0 ? 0.6 : 0.4),
         opacity: 1,
         color: isSelected ? '#f59e0b' : (count > 0 ? '#ffffff' : '#94a3b8'),
         dashArray: count > 0 ? '' : '1',
@@ -295,7 +295,7 @@ function renderGeojson(onCountrySelect) {
         mouseover: function (e) {
           const l = e.target;
           l.setStyle({
-            weight: 3.5,
+            weight: 2,
             color: '#f59e0b',
             dashArray: '',
             fillOpacity: 0.96

@@ -39,22 +39,10 @@ export function renderCharts(filteredData, onMarkerSelect, onStudySelect, onCoun
   renderDonut(filteredData, onStudySelect);
 }
 
-export function updateChartsTheme() {
-  const theme = getThemeColors();
-  
-  if (stackedBarChart) {
-    stackedBarChart.options.scales.x.grid.color = theme.grid;
-    stackedBarChart.options.scales.x.ticks.color = theme.text;
-    stackedBarChart.options.scales.y.ticks.color = theme.text;
-    stackedBarChart.options.plugins.legend.labels.color = theme.text;
-    stackedBarChart.update();
-  }
-
-  if (donutChart) {
-    donutChart.options.plugins.legend.labels.color = theme.text;
-    donutChart.data.datasets[0].borderColor = theme.borderColor;
-    donutChart.update();
-  }
+export function updateChartsTheme(filteredData, onMarkerSelect, onStudySelect, onCountrySelect) {
+  const data = filteredData || window.currentFilteredData || [];
+  renderStackedBar(data, onMarkerSelect, onCountrySelect);
+  renderDonut(data, onStudySelect);
 }
 
 // 1. 100% Stacked Bar Chart: Marcadores en el Eje, Países apilados
@@ -241,6 +229,7 @@ function renderDonut(data, onSelect) {
                 return {
                   text: `${label} (${pct}%)`,
                   fillStyle: data.datasets[0].backgroundColor[i],
+                  fontColor: theme.text,
                   hidden: isNaN(data.datasets[0].data[i]),
                   index: i
                 };

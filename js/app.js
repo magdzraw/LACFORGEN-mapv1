@@ -59,7 +59,7 @@ function setTheme(theme) {
   }
 
   switchMapTheme(isDark);
-  updateChartsTheme();
+  updateChartsTheme(filteredData, handleMarkerClick, handleStudyClick, handleCountryClick);
 }
 
 // Load Data from Google Sheets or Fallback

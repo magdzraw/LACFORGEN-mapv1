@@ -5,7 +5,7 @@
 
 ---
 
-## 🚀 Características Principales
+## Características Principales
 
 * **Independiente y Ágil:** Cero dependencias de licencias de Power BI, servidores intermedios o procesos ETL complejos.
 * **Conexión Directa en Tiempo Real:** Ingestión de datos vía streaming CSV en vivo directamente desde la hoja de respuestas de Google Sheets.
@@ -19,7 +19,7 @@
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 * **HTML5 & CSS3:** Diseño responsive sin frameworks pesados, con CSS custom properties y glassmorphism.
 * **JavaScript (ES Modules):** Arquitectura modular (`app.js`, `map.js`, `charts.js`).
@@ -27,14 +27,3 @@
 * **Chart.js:** Gráficos analíticos con tooltips y eventos de clic para filtrado interactivo.
 * **PapaParse:** Procesamiento y limpieza ultrarrápida del flujo CSV.
 
----
-
-## 🌐 Publicación en GitHub Pages
-
-Para habilitar este dashboard en GitHub Pages:
-1. Sube este repositorio a tu cuenta de GitHub.
-2. Ve a **Settings** &rarr; **Pages**.
-3. En **Build and deployment**, selecciona:
-   * **Source:** `Deploy from a branch`
-   * **Branch:** `main` (o `master`) / `/ (root)`.
-4. Haz clic en **Save**. En pocos segundos tu dashboard estará disponible públicamente en `https://<tu-usuario>.github.io/<tu-repositorio>/`.

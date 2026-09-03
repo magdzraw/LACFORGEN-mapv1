@@ -511,12 +511,12 @@ body {
   color: var(--text-muted);
 }
 
-/* Map & 3D Globe Containers (Taller, verticalized to fill frame) */
+/* Map & 3D Globe Containers (Fixed height aligned with charts) */
 #map-container,
 #globe-container {
-  flex: 1;
-  min-height: 640px;
-  height: 100%;
+  height: 560px;
+  min-height: 560px;
+  max-height: 560px;
   width: 100%;
   border-radius: var(--border-radius-md);
   overflow: hidden;
@@ -528,10 +528,17 @@ body {
 #globe-container {
   background: radial-gradient(circle at center, #071126 0%, #030712 100%);
   cursor: grab;
+  max-width: 100%;
 }
 
 #globe-container:active {
   cursor: grabbing;
+}
+
+#globe-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
 
 .view-mode-toggle {
@@ -552,6 +559,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -625,7 +633,7 @@ body {
 .charts-column {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   height: 100%;
 }
 
@@ -633,18 +641,21 @@ body {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--border-radius-lg);
-  padding: 20px;
+  padding: 16px 18px;
   box-shadow: var(--shadow-sm);
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
 .chart-wrapper {
   position: relative;
   flex: 1;
-  min-height: 250px;
+  min-height: 200px;
+  height: 100%;
   width: 100%;
 }
 

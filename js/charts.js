@@ -213,14 +213,18 @@ function renderDonut(data, onSelect) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      cutout: '64%',
+      cutout: '58%',
+      layout: {
+        padding: { top: 4, bottom: 4, left: 2, right: 6 }
+      },
       plugins: {
         legend: {
           position: 'right',
           labels: {
-            boxWidth: 12,
+            boxWidth: 10,
+            padding: 5,
             color: theme.text,
-            font: { size: 10.5, family: "'Outfit', sans-serif" },
+            font: { size: 9.8, family: "'Outfit', sans-serif" },
             generateLabels: (chart) => {
               const data = chart.data;
               return data.labels.map((label, i) => {

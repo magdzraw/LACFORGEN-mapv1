@@ -1,5 +1,5 @@
 // 3D Globe Visualization using Globe.gl (Three.js / WebGL)
-import { normalizeCountryName, countryColors, getGeojsonData } from './map.js';
+import { normalizeCountryName, countryColors, getGeojsonData } from './map.js?v=2.1';
 
 let globeInstance = null;
 let geojsonData = null;
@@ -30,7 +30,7 @@ export function initGlobe(onCountrySelect) {
   const container = document.getElementById('globe-container');
   if (!container || globeInstance) return;
   if (typeof Globe !== 'function') {
-    console.warn('Globe.gl is not available');
+    console.warn('Globe.gl is not available or still loading');
     return;
   }
 
@@ -41,9 +41,8 @@ export function initGlobe(onCountrySelect) {
     ? 'https://unpkg.com/three-globe/example/img/earth-night.jpg' 
     : 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
 
-  const parent = container.parentElement;
-  const width = container.clientWidth || (parent ? parent.clientWidth - 40 : 650);
-  const height = container.clientHeight || 640;
+  const width = container.clientWidth || 600;
+  const height = 560;
 
   globeInstance = Globe()(container)
     .globeImageUrl(globeTexture)
@@ -52,28 +51,14 @@ export function initGlobe(onCountrySelect) {
     .height(height)
     .atmosphereColor(isDark ? '#38bdf8' : '#0284c7')
     .atmosphereAltitude(isDark ? 0.18 : 0.14)
-    .pointOfView({ lat: -14, lng: -66, altitude: 2.1 }, 1000);
+    .pointOfView({ lat: -15, lng: -65, altitude: 2.1 }, 0);
 
-  // Setup auto-rotation
+  // Auto-rotation explicitly disabled: stays static on Latin America focus
   if (globeInstance.controls) {
     const controls = globeInstance.controls();
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
+    controls.autoRotate = false;
     controls.enableDamping = true;
-    controls.dampingFactor = 0.1;
-
-    // Pause auto-rotation on user drag/interaction
-    let rotateTimeout;
-    const pauseRotation = () => {
-      controls.autoRotate = false;
-      clearTimeout(rotateTimeout);
-      rotateTimeout = setTimeout(() => {
-        controls.autoRotate = true;
-      }, 5000);
-    };
-
-    container.addEventListener('pointerdown', pauseRotation);
-    container.addEventListener('wheel', pauseRotation);
+    controls.dampingFactor = 0.08;
   }
 
   // Load GeoJSON polygons (use cached from map.js or fetch)
@@ -95,9 +80,7 @@ export function initGlobe(onCountrySelect) {
 
   // Handle window resize
   window.addEventListener('resize', () => {
-    if (globeInstance && container.offsetParent !== null) {
-      globeInstance.width(container.clientWidth).height(container.clientHeight);
-    }
+    resizeGlobe();
   });
 }
 
@@ -189,7 +172,7 @@ function renderGlobePolygons() {
         const coords = countryCoordinates[newCountry];
         globeInstance.pointOfView({ lat: coords.lat, lng: coords.lng, altitude: 1.4 }, 1200);
       } else {
-        globeInstance.pointOfView({ lat: -14, lng: -66, altitude: 2.1 }, 1200);
+        globeInstance.pointOfView({ lat: -15, lng: -65, altitude: 2.1 }, 1200);
       }
 
       if (onSelectCallback) {
@@ -210,7 +193,7 @@ export function updateGlobe(countryFilter, onCountrySelect) {
       const coords = countryCoordinates[selectedCountry];
       globeInstance.pointOfView({ lat: coords.lat, lng: coords.lng, altitude: 1.4 }, 1200);
     } else if (!selectedCountry) {
-      globeInstance.pointOfView({ lat: -14, lng: -66, altitude: 2.1 }, 1200);
+      globeInstance.pointOfView({ lat: -15, lng: -65, altitude: 2.1 }, 1200);
     }
   }
 }
@@ -232,6 +215,7 @@ export function switchGlobeTheme(isDark) {
 export function resizeGlobe() {
   const container = document.getElementById('globe-container');
   if (globeInstance && container && container.offsetParent !== null) {
-    globeInstance.width(container.clientWidth).height(container.clientHeight);
+    const w = container.clientWidth || 580;
+    globeInstance.width(w).height(560);
   }
 }

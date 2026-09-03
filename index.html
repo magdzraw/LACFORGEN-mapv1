@@ -175,11 +175,11 @@
             <span class="panel-subtitle">Pasa el cursor sobre un país para ver el detalle &bull; Haz clic para enfocar y filtrar</span>
           </div>
           <div class="view-mode-toggle">
-            <button id="view-mode-2d" class="page-btn active" title="Vista Plana 2D">
+            <button type="button" id="view-mode-2d" class="page-btn active" title="Vista Plana 2D">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
               Mapa 2D
             </button>
-            <button id="view-mode-3d" class="page-btn" title="Vista Globo 3D">
+            <button type="button" id="view-mode-3d" class="page-btn" title="Vista Globo 3D">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
               Globo 3D
             </button>
@@ -296,9 +296,9 @@
   <!-- Chart.js for interactive analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <!-- Globe.gl for 3D Earth Visualization -->
-  <script src="https://unpkg.com/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
 
   <!-- Application Modules -->
-  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/app.js?v=2.2"></script>
 </body>
 </html>

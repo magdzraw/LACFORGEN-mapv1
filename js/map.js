@@ -134,6 +134,10 @@ export function initMap(onCountrySelect) {
     });
 }
 
+export function getGeojsonData() {
+  return geojsonData;
+}
+
 export function switchMapTheme(isDark) {
   if (!mapInstance) return;
   // Automatically switch between light and dark canvas if user hasn't explicitly chosen satellite/topo

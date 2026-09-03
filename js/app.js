@@ -1,5 +1,6 @@
 import { initMap, updateMap, normalizeCountryName, switchMapTheme } from './map.js';
 import { renderCharts, toggleDonutMode, updateChartsTheme } from './charts.js';
+import { initGlobe, updateGlobe, switchGlobeTheme, resizeGlobe, isGlobeInitialized } from './globe.js';
 
 const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1PURcEMg1RgnafRQEy1Bfn_mF8_CXWOsxhqNH_n-mPgc/gviz/tq?tqx=out:csv&gid=603583124';
 
@@ -26,8 +27,49 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupTheme();
   setupEventListeners();
   initMap(handleCountryClick);
+  setupViewModeToggle();
   await loadData();
 });
+
+// Setup 2D Map vs 3D Globe View Mode Toggle
+function setupViewModeToggle() {
+  const btn2d = document.getElementById('view-mode-2d');
+  const btn3d = document.getElementById('view-mode-3d');
+  const mapEl = document.getElementById('map-container');
+  const globeEl = document.getElementById('globe-container');
+
+  const activate3D = () => {
+    if (btn3d) btn3d.classList.add('active');
+    if (btn2d) btn2d.classList.remove('active');
+    if (mapEl) mapEl.style.display = 'none';
+    if (globeEl) globeEl.style.display = 'block';
+
+    if (!isGlobeInitialized()) {
+      initGlobe(handleCountryClick);
+    } else {
+      resizeGlobe();
+      updateGlobe(filters.pais, handleCountryClick);
+    }
+  };
+
+  const activate2D = () => {
+    if (btn2d) btn2d.classList.add('active');
+    if (btn3d) btn3d.classList.remove('active');
+    if (mapEl) mapEl.style.display = 'block';
+    if (globeEl) globeEl.style.display = 'none';
+    updateMap(filters.pais, handleCountryClick);
+  };
+
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('view') === '3d') {
+    activate3D();
+  }
+
+  if (btn2d && btn3d) {
+    btn2d.addEventListener('click', activate2D);
+    btn3d.addEventListener('click', activate3D);
+  }
+}
 
 // Theme Management (Dark Mode)
 function setupTheme() {
@@ -59,6 +101,7 @@ function setTheme(theme) {
   }
 
   switchMapTheme(isDark);
+  if (isGlobeInitialized()) switchGlobeTheme(isDark);
   updateChartsTheme(filteredData, handleMarkerClick, handleStudyClick, handleCountryClick);
 }
 
@@ -202,6 +245,7 @@ function applyFilters() {
 
   updateKPIs();
   updateMap(filters.pais, handleCountryClick);
+  if (isGlobeInitialized()) updateGlobe(filters.pais, handleCountryClick);
   renderCharts(filteredData, handleMarkerClick, handleStudyClick, handleCountryClick);
   renderTable();
   renderActiveFilterBadges();

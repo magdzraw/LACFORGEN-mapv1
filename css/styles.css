@@ -511,8 +511,9 @@ body {
   color: var(--text-muted);
 }
 
-/* Map Container (Taller, verticalized to fill frame) */
-#map-container {
+/* Map & 3D Globe Containers (Taller, verticalized to fill frame) */
+#map-container,
+#globe-container {
   flex: 1;
   min-height: 640px;
   height: 100%;
@@ -522,6 +523,47 @@ body {
   border: 1px solid var(--card-border);
   position: relative;
   z-index: 10;
+}
+
+#globe-container {
+  background: radial-gradient(circle at center, #071126 0%, #030712 100%);
+  cursor: grab;
+}
+
+#globe-container:active {
+  cursor: grabbing;
+}
+
+.view-mode-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--bg);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+
+.view-mode-toggle .page-btn {
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.view-mode-toggle .page-btn:hover {
+  color: var(--text-main);
+}
+
+.view-mode-toggle .page-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
 }
 
 /* Map Top-Right Info Box */
